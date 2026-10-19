@@ -1,0 +1,62 @@
+/* 이력서 A4 페이지 보기. 한 장 794×1123(A4 @96dpi) 기준, 화면에서는 2장씩 나란히 */
+body.rs { background: #eef0f3; }
+.nav .dl { margin-left: auto; border: 0; background: var(--ink); color: #fff; border-radius: 6px; padding: 7px 14px; font: inherit; font-size: 14px; font-weight: 600; cursor: pointer; }
+.sheets { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; max-width: 1640px; margin: 0 auto; padding: 28px 24px 80px; }
+.sheet { margin: 0; aspect-ratio: 210 / 297; position: relative; overflow: hidden; background: #fff; border: 1px solid #cfd3da; }
+.sheet .in { position: absolute; top: 0; left: 0; width: 794px; height: 1123px; transform: scale(var(--s, .5)); transform-origin: 0 0; padding: 52px 56px 44px; box-sizing: border-box; font-size: 12.5px; line-height: 1.55; }
+.sheet .body { height: 100%; overflow: hidden; }
+.sheet .pno { position: absolute; right: 56px; bottom: 22px; font-size: 10.5px; color: var(--muted); }
+
+/* 페이지 안 밀도 */
+.sheet .head h1 { font-size: 28px; }
+.sheet .contacts { font-size: 12px; line-height: 1.6; }
+.sheet section { margin-top: 24px; }
+.sheet section.cont { margin-top: 14px; }
+.sheet section.tlc.cont { margin-top: 0; }
+.sheet h2 { font-size: 16px; margin-bottom: 10px; }
+.sheet h3 { font-size: 13.5px; }
+.sheet p { margin-bottom: 8px; }
+.sheet .cols { gap: 6px 32px; }
+.sheet .cols h3 { margin: 4px 0 2px; }
+.sheet .tl { grid-template-columns: 128px 1fr; padding: 4px 0 4px 12px; }
+.sheet .tl::before { top: 10px; }
+.sheet .tl .desc { font-size: 11.5px; }
+.sheet .row { grid-template-columns: 220px 1fr; margin-bottom: 8px; }
+.sheet .proj { margin-bottom: 4px; }
+.sheet .proj h3 { font-size: 14.5px; }
+.sheet .summary { margin: 3px 0 0; }
+.sheet .tags { gap: 5px; margin-top: 7px; }
+.sheet .tag { font-size: 11px; padding: 1px 9px; }
+.sheet .period { font-size: 11.5px; }
+.sheet .job { grid-template-columns: 150px 1fr; margin-bottom: 10px; }
+.sheet ul { margin-top: 3px; }
+.sheet li { margin: 1px 0; }
+
+@media (max-width: 900px) { .sheets { grid-template-columns: 1fr; } }
+@page { size: 210mm 297mm; margin: 0; }
+@media print {
+  body.rs { background: #fff; } .nav { display: none; }
+  .sheets { display: block; padding: 0; margin: 0; max-width: none; }
+  html, body { margin: 0 !important; padding: 0 !important; }
+  .sheet { margin: 0 !important; width: 210mm; height: 296.5mm; aspect-ratio: auto; border: 0; break-after: page; page-break-after: always; overflow: hidden; }
+  .sheet:last-child { break-after: auto; page-break-after: auto; }
+  .sheet { break-inside: avoid; page-break-inside: avoid; }
+  .sheet .in { transform: none !important; position: relative; width: 100%; height: 100%; }
+  * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+}
+
+/* 이전 경력 한 줄 */
+.sheet .prior-h { font-size: 13px; color: var(--muted); margin: 6px 0 6px; }
+.sheet .prior { display: grid; grid-template-columns: 220px 1fr; gap: 0 16px; padding: 4px 0; border-top: 1px solid var(--line); font-size: 12px; }
+.sheet .prior .period { font-size: 11px; }
+
+.sheet .badge.store { color: var(--accent); text-decoration: underline; text-underline-offset: 2px; margin-left: 8px; font-size: 11.5px; }
+.sheet section { margin-top: 18px; }
+.sheet section.cont { margin-top: 10px; }
+.sheet .in { padding: 46px 56px 40px; }
+.sheet .tags { margin-top: 5px; }
+.sheet .proj { margin-bottom: 0; }
+.sheet .proj ul { margin-top: 2px; }
+/* 섹션 간격 */
+.sheet section:not(.cont) { margin-top: 30px; }
+.sheet .body > :first-child { margin-top: 0; }

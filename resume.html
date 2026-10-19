@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>이력서 — 형성희</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="resume-pages.css">
+</head>
+<body class="rs">
+<nav class="nav"><a href="resume.html" class="on">이력서</a><a href="portfolio.html">포트폴리오</a>
+  <button class="dl" onclick="window.print()">PDF로 저장 (A4)</button></nav>
+<main class="sheets" id="app"></main>
+
+<script src="resume-data.js"></script>
+<script>
+// 데이터 → 블록 → A4 페이지에 순서대로 채움. 내용은 resume-data.js, 레이아웃은 여기.
+const r = RESUME;
+const li = a => a.map(x => `<li>${x}</li>`).join("");
+const tags = a => `<div class="tags">${a.map(t => `<span class="tag">${t}</span>`).join("")}</div>`;
+const h2 = t => `<h2>${t}</h2>`;
+
+// 블록 하나는 페이지 사이에서 쪼개지지 않음. 섹션 제목은 첫 항목과 붙여 둔다.
+const blocks = [
+  `<header class="head"><div><h1>${r.name}</h1><span class="birth">${r.birth}</span><div class="title">${r.title}</div></div>
+    <div class="contacts">${r.contacts.map(c => c.href ? `<a href="${c.href}" target="_blank">${c.label}</a>` : c.label).join("<br>")}</div></header>`,
+  `<section>${h2("소개")}${r.intro.map(p => `<p>${p}</p>`).join("")}</section>`,
+  `<section>${h2("기술 스택")}<div class="cols">
+    <div>${r.skills.slice(0, 1).map(s => `<h3>${s.group}</h3><ul>${li(s.items)}</ul>`).join("")}</div>
+    <div>${r.skills.slice(1).map(s => `<h3>${s.group}</h3><ul>${li(s.items)}</ul>`).join("")}</div></div></section>`,
+  ...r.career.filter(j => !j.prior).map((j, i) => `<section class="${i ? "cont" : ""}">${i ? "" : h2("경력")}
+    <div class="job"><div><div class="org">${j.org}</div><div class="period">${j.period}</div>${j.note ? `<div class="note">${j.note}</div>` : ""}</div>
+    <div><div class="role">${j.role}</div><ul>${li(j.bullets)}</ul></div></div></section>`),
+  `<section class="cont"><h3 class="prior-h">이전 경력</h3>${r.career.filter(j => j.prior).map(j => `<div class="prior"><div><b>${j.org}</b> <span class="period">${j.period} · ${j.note}</span></div><div><b>${j.role}</b> — ${j.line}</div></div>`).join("")}</section>`,
+  ...r.projects.map((p, i) => `<section class="${i ? "cont" : ""}">${i ? "" : h2("프로젝트") + `<p>${r.projectsIntro}</p>`}
+    <article class="proj"><header><h3>${i + 1}. ${p.title}${p.links ? p.links.map(([t, u]) => `<a class="badge store" href="${u}" target="_blank">${t} ↗</a>`).join("") : p.badge ? `<span class="badge">[${p.badge}]</span>` : ""}</h3><span class="period">${p.period}</span></header>
+    <p class="summary">${p.summary}</p><ul>${li(p.bullets)}</ul>${tags(p.tags)}</article></section>`),
+
+  `<section>${h2("교육 · 학력")}${r.education.map(e => `<div class="prior"><div><b>${e.title.replace(" | ", " · ")}</b></div><div><span class="period">${e.period}</span></div></div>`).join("")}${r.degrees.map(d => `<div class="prior"><div><b>${d.title}</b></div><div>${d.desc}</div></div>`).join("")}</section>`,
+
+];
+
+function paginate() {
+const app = document.getElementById("app");
+app.innerHTML = "";
+let page;
+const newPage = () => {
+  const sheet = document.createElement("section");
+  sheet.className = "sheet";
+  sheet.innerHTML = `<div class="in"><div class="body"></div><div class="pno"></div></div>`;
+  app.appendChild(sheet);
+  page = sheet.querySelector(".body");
+};
+newPage();
+for (const html of blocks) {
+  page.insertAdjacentHTML("beforeend", html);
+  if (page.scrollHeight > page.clientHeight && page.children.length > 1) {
+    const last = page.lastElementChild; last.remove(); newPage(); page.appendChild(last);
+  }
+}
+document.querySelectorAll(".pno").forEach((el, i, all) => el.textContent = `${i + 1} / ${all.length}`);
+
+}
+const fit = el => el.style.setProperty("--s", el.clientWidth / 794);
+const ro = new ResizeObserver(es => es.forEach(e => fit(e.target)));
+const run = () => { paginate(); document.querySelectorAll(".sheet").forEach(el => { fit(el); ro.observe(el); }); };
+run();
+document.fonts.ready.then(run);
+</script>
+</body>
+</html>

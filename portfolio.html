@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>포트폴리오 v2 — 형성희</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+<link rel="stylesheet" href="slides-v2.css">
+</head>
+<body>
+<nav class="nav"><a href="resume.html">이력서</a><a href="portfolio.html" class="on">포트폴리오</a><a href="portfolio-old.html">이전 버전</a>
+  <button class="dl" onclick="window.print()">PDF로 저장</button></nav>
+<main class="slides" id="app"></main>
+
+<script src="portfolio-v2-data.js"></script>
+<script>
+const slide = (cls, html, foot = "") => `<section class="slide ${cls}"><div class="in">${html}${foot ? `<div class="foot">${foot}</div>` : ""}<div class="no"></div></div></section>`;
+const chips = (a, cls = "") => a.map(x => `<span class="chip ${cls}">${x}</span>`).join("");
+const img = (i, cls = "") => `<img class="${cls}" src="screenshots/${i}" alt="">`;
+const meta = m => `<dl class="meta">${m.map(([k, v]) => `<dt>${k}</dt><dd>${v}</dd>`).join("")}</dl>`;
+const results = r => `<div class="results">${r.map(k => `<div><div class="lead">${k.lead}</div><div class="sub">${k.sub}</div></div>`).join("")}</div>`;
+const link = t => `<a href="${t.includes("@") ? "mailto:" + t : /^[0-9-]+$/.test(t) ? "tel:" + t.replace(/-/g, "") : "https://" + t}" target="_blank">${t}</a>`;
+const c = PF.cover, g = PF.glance, ix = PF.index, tl = PF.timeline;
+
+const coverSlide = slide("cover", `
+  <div class="year">${c.year}</div>
+  <h1>${c.name}<span>${c.latin}</span></h1>
+  <div class="crole">${c.role}</div>
+  <p class="pos">${c.tagline}</p>
+  <div class="cover-foot"><span>${c.now}</span><span>${c.contacts.map(link).join("  /  ")}</span></div>`);
+
+const glanceSlide = slide("glance", `
+  <h2>${g.title}</h2>
+  <div class="g-grid">
+    <div class="g-intro">${g.intro.map(t => `<p>${t}</p>`).join("")}</div>
+    <div class="g-areas">${g.areas.map(a => `<div><h3>${a.title}</h3><p>${a.desc}</p></div>`).join("")}</div>
+  </div>
+  `,
+  g.stack);
+
+const fe = PF.frontend;
+const frontendSlide = slide("fe", `
+  <h2>${fe.title}</h2>
+  <div class="fe-grid">${fe.items.map(x => `<div><h3>${x.h}</h3><p>${x.p}</p></div>`).join("")}</div>`);
+
+// 타임라인: 월 인덱스로 그리드 배치
+const mi = s => { const [y, m] = s.split(".").map(Number); return (y - 2023) * 12 + (m - 9); };
+const months = mi(tl.end) - mi(tl.start) + 1;
+// 빈 달은 좁게: 교육만 있는 달 0.55, 아무것도 없는 달 0.3, 나머지 1
+const weight = Array.from({ length: months }, (_, m) => {
+  const hit = l => l.items.some(i => m >= mi(i.from) && m < mi(i.to));
+  if (tl.lanes.filter(l => l.color !== "muted").some(hit)) return 1;
+  return tl.lanes.some(hit) ? 0.55 : 0.3;
+});
+const cols = `grid-template-columns:${weight.map(w => w + "fr").join(" ")}`;
+const timelineSlide = slide("timeline", `
+  <h2>타임라인<small>2023.09 ~ 현재</small></h2>
+  <div class="tl" style="--n:${months}">
+    <div class="tl-years" style="${cols}">${[2023, 2024, 2025, 2026].map(y => `<span style="grid-column:${Math.max(1, mi(y + ".01") + 1)} / span ${y === 2023 ? 4 : 12}">${y === 2023 ? "2023.09" : y}</span>`).join("")}</div>
+    ${tl.lanes.map(l => `<div class="lane ${l.color}"><div class="lane-name">${l.name}</div>
+      <div class="lane-rows" style="${cols}">${l.items.map(i => `<span class="bar${mi(i.to) - mi(i.from) <= 2 ? " short" : ""}" style="grid-column:${mi(i.from) + 1} / ${mi(i.to) + 1}; grid-row:${i.row + 1}">${i.label}</span>`).join("")}</div></div>`).join("")}
+  </div>
+  <table class="tl-table"><thead><tr><th>기간</th><th>어디서</th><th>무엇을</th></tr></thead>
+    <tbody>${tl.table.map(r => `<tr><td>${r[0]}</td><td>${r[1]}</td><td>${r[2]}</td></tr>`).join("")}</tbody></table>`);
+
+const indexSlide = slide("index", `
+  <h2>${ix.title}<small>${ix.items.length}개 · 직무 관련 순</small></h2>
+  <div class="cards">${ix.items.map(p => `<div class="card"><div class="thumb${p.phone ? " phone" : ""}">${img(p.thumb, p.bare ? "bare" : "")}</div>
+    <div class="cname">${p.name}</div><div class="cline">${p.line}</div><div class="cmeta"><span>${p.tag}</span><span>${p.period}</span></div></div>`).join("")}</div>`);
+
+let pno = 0;
+const phead = (name, org) => `<div class="phead"><span class="pno">프로젝트 ${++pno}</span><span class="porg">${org}</span></div>`;
+const projectSlides = p => {
+  const n = pno + 1;
+  const a = slide("pov", `${phead(p.name, p.org)}
+    <div class="pov-grid">
+      <div class="pov-left">
+        <h2>${p.name}</h2>
+        <p class="plain">${p.plain}</p>
+        ${p.summary ? `<p class="sum">${p.summary}</p>` : ""}
+        <dl class="brief"><dt>기획 배경</dt><dd>${p.background}</dd><dt>핵심 문제</dt><dd>${p.problem}</dd></dl>
+        ${meta([["역할", p.role], ...p.meta])}
+      </div>
+      <figure class="hero">${img(p.hero)}<figcaption>${p.caption}</figcaption></figure>
+    </div>
+    ${results(p.results)}`);
+  const b = slide("ptask", `<div class="phead"><span class="pno">프로젝트 ${n}</span><span class="porg">${p.org}</span></div>
+    <h2>${p.name}<small>핵심 과제 ${p.tasks.length}</small></h2>
+    <div class="tasks">${p.tasks.map(t => `<div class="task"><h3>${t.title}</h3>
+      <div class="row"><div class="rl">문제</div><p>${t.problem}</p></div>
+      <div class="row"><div class="rl">해결</div><p>${t.solution}</p></div>
+      <div class="row res"><div class="rl">결과</div><p>${t.result}</p></div></div>`).join("")}</div>`);
+  return a + b;
+};
+
+const cmsSlide = () => { const m = PF.cms; return slide("cms", `${phead(m.name, m.org)}
+  <div class="cms-grid">
+    <div><h2>${m.name}</h2><p class="plain">${m.plain}</p>${meta(m.meta)}
+      <div class="points">${m.points.map(x => `<div><h4>${x.h}</h4><p>${x.p}</p></div>`).join("")}</div><p class="other">${m.other}</p></div>
+    <div><figure class="hero">${img(m.hero)}<figcaption>${m.caption}</figcaption></figure>
+      <div class="routes"><div class="routes-title">App Router 구조</div>${m.routes.map(([r, d]) => `<div class="route"><code>${r}</code><span>${d}</span></div>`).join("")}</div></div>
+  </div>`); };
+
+const ragSlide = () => { const r = PF.rag; return slide("rag", `${phead(r.name, r.org)}
+  <div class="rag-grid">
+    <div><h2>${r.name}</h2><p class="plain">${r.plain}</p>${meta(r.meta)}</div>
+    <div class="rag-media">${img(r.phone, "rag-phone")}${img(r.diagram, "rag-diagram")}</div>
+  </div>
+  ${results(r.results)}`); };
+
+const appsSlide = () => { const a = PF.apps; return slide("apps", `
+  <h2>${a.title}<small>운영 중</small></h2>
+  <p class="plain">${a.sub}</p>
+  <div class="app-grid">${a.items.map(x => `<div class="app">${img(x.img, x.bare ? "bare" : "")}<h3>${x.name}<small>${x.period}</small></h3><p>${x.line}</p><div class="tech">${x.tech}</div>${x.link ? `<a class="store" href="https://${x.link.split(" ")[0]}" target="_blank">App Store</a>${x.link.includes("Google") ? ` <a class="store" href="https://play.google.com/store/apps/details?id=com.seonghee.korean_history_app" target="_blank">Google Play</a>` : ""}` : ""}</div>`).join("")}</div>`); };
+
+const workSlide = () => { const w = PF.work; return slide("work", `
+  <h2>${w.title}</h2>
+  <div class="work-grid">${w.items.map(x => `<div><h4>${x.h}</h4><p>${x.p}</p></div>`).join("")}</div>`); };
+
+const outroSlide = slide("cover outro", `
+  <h1>${PF.outro.title}</h1><p class="pos">${PF.outro.lead}</p>
+  <div class="cover-foot"><span>${PF.outro.contacts.map(link).join("  /  ")}</span></div>`);
+
+document.getElementById("app").innerHTML = coverSlide + glanceSlide + frontendSlide + timelineSlide + indexSlide
+  + PF.projects.map(projectSlides).join("") + cmsSlide() + ragSlide() + appsSlide() + workSlide() + outroSlide;
+
+const fit = el => el.style.setProperty("--s", el.clientWidth / 1280);
+const ro = new ResizeObserver(es => es.forEach(e => fit(e.target)));
+document.querySelectorAll(".slide").forEach(el => { ro.observe(el); el.addEventListener("click", () => el.classList.toggle("zoom")); });
+</script>
+</body>
+</html>

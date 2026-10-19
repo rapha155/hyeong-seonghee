@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>포트폴리오 — 형성희</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="slides.css">
+</head>
+<body class="pf">
+<nav class="nav"><a href="resume.html">이력서</a><a href="portfolio.html">포트폴리오</a><a href="portfolio-old.html" class="on">이전 버전</a>
+  <button class="dl" onclick="window.print()">PDF 다운로드 (16:9)</button></nav>
+<p class="hint">슬라이드를 클릭하면 크게 보고, 다시 클릭하면 돌아옵니다. PDF는 인쇄 창에서 "PDF로 저장"을 고르세요.</p>
+<main class="slides" id="app"></main>
+
+<script src="portfolio-data.js"></script>
+<script>
+// 데이터 → 슬라이드(1280×720). 레이아웃은 여기, 내용은 portfolio-data.js.
+const P = PORTFOLIO;
+const slide = (cls, html) => `<section class="slide ${cls}"><div class="in">${html}</div></section>`;
+const kv = a => a.map(x => `<div class="kv"><div class="k">${x.label}</div><div>${x.value}</div></div>`).join("");
+const li = a => a.map(x => `<li>${x}</li>`).join("");
+const block = b => `${b.h ? `<h4>${b.h}</h4>` : ""}${(b.p || []).map(t => `<p>${t}</p>`).join("")}${b.list ? `<ol>${li(b.list)}</ol>` : ""}`;
+const img = i => `<img src="screenshots/${i}" alt="">`;
+const label = (p, i) => `<div class="p-label"><div class="eyebrow">Project ${i + 1}</div><h2>${p.name}</h2><div class="period">${p.period}</div>${p.badge ? `<span class="tag">${p.badge}</span>` : ""}${p.role ? `<div class="role">${p.role}</div>` : ""}</div>`;
+
+const projectSlides = (p, i) => {
+  const info = `<div class="p-info${p.desktop ? "" : " one"}">
+    <div><h3>프로젝트 개요</h3>${kv(p.overview || [])}</div>
+    <div><h3>기술 스택</h3>${kv(p.stack || [])}</div>
+    ${p.design ? `<div><h3>UI/UX & Design</h3>${kv(p.design)}</div>` : ""}
+    ${p.outcomes ? `<div><h3>성과 지표</h3><ul>${li(p.outcomes)}</ul></div>` : ""}
+  </div>`;
+  const over = p.definition
+    ? `<div class="band rag"><div>${label(p, i)}</div><div><h3>1. 서비스 정의</h3><p>${p.definition}</p></div><div><h3>2. 핵심 역할</h3><ul class="plain">${p.roles.map(r => `<li>· ${r}</li>`).join("")}</ul></div></div>
+       <div class="media"><div class="phones">${p.images.map(img).join("")}</div><img class="diagram" src="screenshots/${p.diagram}" alt=""></div>`
+    : p.desktop
+    ? `<div class="p-ov desktop">${label(p, i)}<div class="shots">${p.images.map(img).join("")}</div>${info}</div>`
+    : `<div class="p-ov">${label(p, i)}<div class="phones">${p.images.map(img).join("")}</div>${info}</div>`;
+  const detail = `<div class="band"><div class="eyebrow">Project ${i + 1}</div><h2>${p.name} <span>- 핵심 기술 구현</span></h2></div>
+    <div class="cols3">${p.details.map(d => `<div><h3>${d.title}</h3>${d.blocks.map(block).join("")}</div>`).join("")}</div>`;
+  return slide("project", over) + slide("detail", detail);
+};
+
+const a = P.about, o = P.overview, c = P.cover;
+const line = (u, tag) => `<div class="line"><span><b>${u.name}</b> - ${u.desc}</span><span class="period">${u.period}</span>${tag ? `<span class="tag">${tag}</span>` : ""}</div>`;
+
+document.getElementById("app").innerHTML =
+slide("cover", `<div class="eyebrow">${c.eyebrow}</div><div class="role">${c.role}</div><h1>${c.name}</h1>
+  <div class="kw">${c.keywords.join("<br>")}</div><div class="mail">${c.email}</div>`) +
+
+slide("about", `<div><h1>${a.name}</h1><div class="role">${a.role}</div>${a.intro.map(t => `<p>${t}</p>`).join("")}
+    <div class="links">${a.links.map(l => `<div><div class="k">${l.label}</div>${l.href ? `<a href="${l.href}" target="_blank">${l.value}</a>` : l.value}</div>`).join("")}</div></div>
+  <div><h3>Core Competencies (핵심 역량)</h3>${a.competencies.map(x => `<p><b>${x.title}</b><br>${x.desc}</p>`).join("")}
+    <h3>Technical Stack</h3>${a.stack.map(s => `<p><b>${s.label} :</b> ${s.value}</p>`).join("")}
+    <h3>Projects</h3>${a.projectSummary.map(s => `<p><b>${s.label}</b><br>${s.value}</p>`).join("")}</div>`) +
+
+slide("overview", `<h1>PROJECTS</h1><div class="two">
+  <div><h3>Work — Korea Digital</h3>${o.work.map(u => line(u)).join("")}<h3>AI Project</h3>${o.upcoming.map(u => line(u)).join("")}</div>
+  <div><h3>Published</h3><div class="tags">${o.stats.map(s => `<span class="tag big">${s}</span>`).join("")}</div>${o.published.map(u => line(u, "AppStore")).join("")}</div></div>`) +
+
+P.projects.map(projectSlides).join("") +
+
+slide("cover outro", `<h1>${P.outro.title}</h1><p class="lead">${P.outro.lead}</p>${P.outro.body.map(t => `<p>${t}</p>`).join("")}<div class="mail">${P.outro.email}</div>`);
+
+// 화면 크기에 맞춰 1280×720을 축소. 클릭하면 한 장 크게.
+const fit = el => el.style.setProperty("--s", el.clientWidth / 1280);
+const ro = new ResizeObserver(es => es.forEach(e => fit(e.target)));
+document.querySelectorAll(".slide").forEach(el => { ro.observe(el); el.addEventListener("click", ev => { if (ev.target.tagName !== "A") el.classList.toggle("zoom"); }); });
+</script>
+</body>
+</html>

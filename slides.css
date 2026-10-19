@@ -1,0 +1,94 @@
+/* 포트폴리오 슬라이드. 한 장은 1280×720 기준으로 그리고 화면 폭에 맞춰 축소. */
+body.pf { background: #f3f4f6; }
+.nav .dl { margin-left: auto; border: 0; background: var(--accent); color: #fff; border-radius: 8px; padding: 6px 14px; font: inherit; font-weight: 600; cursor: pointer; }
+.hint { max-width: 1600px; margin: 14px auto 0; padding: 0 24px; color: var(--muted); font-size: 13px; }
+.slides { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; max-width: 1600px; margin: 0 auto; padding: 16px 24px 60px; }
+.slide { aspect-ratio: 16 / 9; position: relative; overflow: hidden; background: #fff; border: 1px solid #d5d8dd; border-radius: 6px; box-shadow: 0 1px 3px rgba(0,0,0,.06); cursor: zoom-in; }
+.slide.zoom { grid-column: 1 / -1; cursor: zoom-out; }
+.slide .in { position: absolute; top: 0; left: 0; width: 1280px; height: 720px; transform: scale(var(--s, .5)); transform-origin: 0 0; padding: 56px 64px; box-sizing: border-box; font-size: 15.5px; line-height: 1.55; }
+
+/* 공통 */
+.in h1 { font-size: 44px; margin: 0 0 8px; }
+.in h2 { font-size: 30px; margin: 4px 0 6px; }
+.in h3 { font-size: 18px; margin: 0 0 10px; padding-bottom: 6px; border-bottom: 1px solid var(--ink); }
+.in h4 { font-size: 16px; margin: 12px 0 2px; }
+.in p { margin: 0 0 8px; }
+.in ul, .in ol { margin: 0 0 8px; padding-left: 18px; }
+.in li { margin: 2px 0; }
+.in code { font-family: inherit; background: var(--chip); padding: 0 4px; border-radius: 3px; }
+.in .eyebrow { color: var(--muted); font-size: 16px; }
+.in .k { font-weight: 700; color: var(--muted); font-size: 13.5px; }
+.in .kv { margin-bottom: 11px; }
+.in .plain { list-style: none; padding: 0; }
+.in .tag { font-size: 12px; padding: 2px 10px; }
+.in .period { color: var(--muted); font-size: 14px; }
+
+/* 표지 · 마무리 */
+.cover .in { color: #fff; padding: 80px 80px; background: radial-gradient(120% 140% at 85% 95%, #6d6a7a 0%, #2d5aa8 30%, #0e2240 60%, #000 100%); }
+.cover .eyebrow { color: #fff; opacity: .85; font-size: 20px; }
+.cover .role { font-size: 30px; margin-bottom: 36px; }
+.cover h1 { font-size: 80px; font-weight: 500; letter-spacing: -1px; margin: 0 0 90px; }
+.cover .kw { font-size: 28px; line-height: 1.5; }
+.cover .mail { position: absolute; right: 64px; bottom: 56px; font-weight: 700; font-size: 16px; }
+.outro .in { background: radial-gradient(120% 140% at 95% 95%, #c9d85e 0%, #1f6b63 35%, #0a2a2f 65%, #000 100%); }
+.outro h1 { font-size: 64px; margin: 20px 0 50px; }
+.outro .lead { font-size: 22px; font-weight: 600; }
+.outro p { font-size: 18px; }
+
+/* 소개 */
+.about .in { display: grid; grid-template-columns: 1fr 1.15fr; gap: 56px; }
+.about h1 { font-size: 60px; }
+.about .role { font-size: 22px; font-weight: 700; margin-bottom: 18px; }
+.about .links { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 40px; }
+.about h3 { margin-top: 22px; }
+.about > .in > div > h3:first-child { margin-top: 0; }
+
+/* 프로젝트 목록 */
+.overview h1 { font-size: 56px; margin-bottom: 24px; }
+.overview .two { display: grid; grid-template-columns: 1fr 1.2fr; gap: 48px; }
+.overview h3 { margin-top: 26px; font-size: 20px; }
+.overview .two > div > h3:first-child { margin-top: 0; }
+.line { display: grid; grid-template-columns: 1fr auto auto; gap: 16px; align-items: center; padding: 9px 0; font-size: 17px; }
+.tag.big { background: var(--chip); border: 0; padding: 8px 16px; font-size: 15px; }
+.in .tags { gap: 10px; margin: 0 0 14px; }
+
+/* 프로젝트 개요 */
+.p-label .role { color: var(--muted); font-size: 13px; margin-top: 10px; }
+.p-label .tag { display: inline-block; margin-top: 8px; }
+.p-ov { display: grid; grid-template-columns: 160px 520px 1fr; gap: 24px; height: 100%; }
+.p-ov .phones { display: flex; gap: 20px; align-items: flex-start; }
+.p-ov .phones img { height: 520px; width: auto; border-radius: 22px; }
+.p-ov.desktop { grid-template-columns: 170px 470px 1fr; }
+.p-ov .shots { display: flex; flex-direction: column; gap: 14px; }
+.p-ov .shots img { width: 100%; border: 1px solid var(--line); border-radius: 6px; }
+.p-info { font-size: 15px; }
+.p-info > div { margin-bottom: 16px; }
+.p-info .kv { margin-bottom: 9px; }
+.p-info h3 { font-size: 17px; margin-bottom: 9px; }
+
+/* 핵심 기술 구현 · RAG 개요 */
+.band { background: #eef3fb; margin: -56px -64px 36px; padding: 44px 64px 32px; }
+.band h2 span { font-weight: 400; }
+.band.rag { display: grid; grid-template-columns: 300px 1fr 1fr; gap: 40px; }
+.band.rag h3 { border: 0; color: var(--muted); font-size: 16px; padding: 0; margin-bottom: 6px; }
+.band.rag p, .band.rag li { font-size: 16px; }
+.media { display: grid; grid-template-columns: auto 1fr; gap: 36px; align-items: start; }
+.media .phones img { height: 440px; width: auto; border-radius: 18px; }
+.media .diagram { width: 100%; border-radius: 6px; }
+.cols3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 36px; }
+.cols3 h3 { font-size: 22px; margin-bottom: 16px; }
+.cols3 p, .cols3 li { font-size: 17px; line-height: 1.6; }
+.cols3 h4 { font-size: 18px; margin-top: 16px; }
+
+@media (max-width: 900px) { .slides { grid-template-columns: 1fr; } }
+
+/* 인쇄 = PPT 비율 PDF. 한 장이 한 페이지. */
+@page { size: 13.333in 7.5in; margin: 0; }
+@media print {
+  body.pf { background: #fff; }
+  .nav, .hint { display: none; }
+  .slides { display: block; padding: 0; margin: 0; max-width: none; }
+  .slide { width: 1280px; height: 720px; border: 0; border-radius: 0; box-shadow: none; break-after: page; page-break-after: always; margin: 0; }
+  .slide .in { transform: none !important; box-shadow: inset 0 0 0 1px #d5d8dd; }
+  * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+}
