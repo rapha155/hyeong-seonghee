@@ -30,25 +30,20 @@ const RESUME = {
   // 개발 경력 타임라인 (2023.09 ~ 현재, 빈 구간 없이). type: work | edu | project
   timeline: [
     { period: "2026.07 — 현재", type: "work", title: "Korea Digital · AI 엔지니어 / 개발자", desc: "Science# 로컬 AI(07~09) · KD order(09~10) · PHRI 수직농장(10~)" },
-    { period: "2026.02 — 2026.08", type: "project", title: "자격증 학습 플랫폼 시리즈 (모노레포 · SQLD)", desc: "Dart Pub Workspace 모노레포, PDF 파싱 자동화, 한국사 앱 업데이트" },
-    { period: "2026.02 — 2026.03", type: "project", title: "공인중개사 학습 AI 챗봇 (RAG)", desc: "LangChain · Qdrant 하이브리드 검색, 시맨틱 캐싱, Docker Compose" },
     { period: "2025.12 — 현재", type: "project", title: "Next.js 사이드 프로젝트", desc: "rapha-studio, IT News CMS(2026.04~), 카드뉴스 미리보기 도구(2026.09~) · Next.js 16 App Router" },
-    { period: "2025.11 — 2026.01", type: "edu", title: "AI 심화 캠프 (RAG) 수료 · 패스트캠퍼스", desc: "LLM · RAG 기반 AI 서비스 및 검색 구조" },
-    { period: "2025.05 — 현재", type: "project", title: "한국사능력검정시험 앱 출시 · 운영", desc: "대량 기출 데이터 구조화, 오답 관리 · App Store" },
-    { period: "2025.03 — 현재", type: "project", title: "SAYON 출시 → 2026.10 LingoStep IELTS로 리뉴얼", desc: "GPT-4o 롤플레이 → IELTS 매일 학습 앱 · App Store · Google Play" },
-    { period: "2025.03 — 현재", type: "project", title: "말씀나무 출시 · 운영", desc: "홈 화면 위젯, 암송 세션 · 복습 일정 · App Store" },
-    { period: "2024.09 — 현재", type: "project", title: "Noahlog 출시 · 운영 (새싹 Flutter 과정 중 개발)", desc: "Offline-First 동기화, 15개국 배포 · App Store" },
-    { period: "2024.09 — 2025.02", type: "edu", title: "Flutter 과정 수료 · 새싹아카데미", desc: "Flutter 앱 개발 및 상태관리·아키텍처 설계" },
-    { period: "2024.06 — 2024.08", type: "project", title: "운동기록 사이트 팀 프로젝트 (구름 과정 중)", desc: "React · Spring 기반 웹 서비스, 팀 개발" },
-    { period: "2024.02 — 2024.08", type: "edu", title: "풀스택 과정 수료 · 구름아카데미", desc: "React · Spring 기반 웹 서비스 개발 및 REST API" },
+    { period: "2025.11 — 2026.03", type: "project", title: "공인중개사 학습 AI 챗봇 (RAG)", desc: "RAG 학습 후 LangChain · Qdrant 하이브리드 검색, 시맨틱 캐싱, Docker Compose" },
+    { period: "2025.09 — 2026.08", type: "project", title: "자격증 학습 플랫폼 시리즈 (모노레포 · SQLD)", desc: "Dart Pub Workspace 모노레포, PDF 파싱 자동화, 한국사 앱 업데이트" },
+    { period: "2025.03 — 현재", type: "project", title: "한국사능력검정시험 앱 기획·출시·운영", desc: "2025.05 출시, 대량 기출 데이터 구조화, 오답 관리" },
+    { period: "2025.01 — 현재", type: "project", title: "SAYON → 2026.10 LingoStep IELTS로 리뉴얼", desc: "2025.03 출시, GPT-4o 롤플레이 → IELTS 매일 학습 앱" },
+    { period: "2025.01 — 현재", type: "project", title: "말씀나무 기획·출시·운영", desc: "2025.03 출시, 홈 화면 위젯, 암송 세션 · 복습 일정" },
+    { period: "2024.06 — 현재", type: "project", title: "Noahlog 기획·출시·운영", desc: "Flutter 독학 후 2024.09 15개국 출시, Offline-First 동기화" },
+    { period: "2024.02 — 2024.06", type: "project", title: "운동기록 사이트 팀 프로젝트", desc: "React · Spring 독학 후 팀 개발" },
     { period: "2023.09 — 2024.02", type: "project", title: "서비스 기획 팀 프로젝트", desc: "유튜브 프리미엄 UX 개선, 이력서 관리 서비스 기획 (Figma)" },
   ],
 
-  education: [
-    { title: "AI 심화 캠프 (RAG) 수료 | 패스트캠퍼스", period: "2025.11 — 2026.01 (2개월)", desc: "LLM·RAG 기반 AI 서비스 및 검색 구조 학습" },
-    { title: "Flutter 과정 수료 | 새싹아카데미", period: "2024.09 — 2025.02 (6개월)", desc: "Flutter 앱 개발 및 상태관리·아키텍처 설계 학습" },
-    { title: "풀스택 과정 수료 | 구름아카데미", period: "2024.02 — 2024.08 (6개월)", desc: "React · Spring 기반 웹 서비스 개발 및 REST API 학습" },
-  ],
+
+  education: [],
+
 
   projectsIntro: "상세한 기획 배경과 문제 해결 과정은 포트폴리오에 정리했습니다.",
   projects: [
@@ -68,7 +63,7 @@ const RESUME = {
       summary: "해외 IT 기사를 수집해 한국어 초안을 만들고 검수·발행하는 편집자용 도구",
       bullets: ["App Router 라우트 그룹과 Route Handler로 보호 영역·상태 전환 API 구성", "수집 → 초안 → 검토 → 예약 발행 상태 머신과 3단 편집 화면"],
       tags: ["Next.js 16", "React 19", "Tailwind v4"] },
-    { title: "공인중개사 AI 챗봇 — 법령 RAG 튜터", badge: "개인", period: "2026.02 — 2026.03",
+    { title: "공인중개사 AI 챗봇 — 법령 RAG 튜터", badge: "개인", period: "2025.11 — 2026.03",
       summary: "법령 조항을 근거로 답하는 공인중개사 수험생용 AI 튜터",
       bullets: ["의미 검색 + 키워드 검색 하이브리드 RAG로 조항 오검색 최소화", "시맨틱 캐싱으로 반복 질문은 LLM 호출 없이 응답"],
       tags: ["FastAPI", "LangChain", "Qdrant"] },

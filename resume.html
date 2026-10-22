@@ -37,7 +37,7 @@ const blocks = [
     <article class="proj"><header><h3>${i + 1}. ${p.title}${p.links ? p.links.map(([t, u]) => `<a class="badge store" href="${u}" target="_blank">${t} ↗</a>`).join("") : p.badge ? `<span class="badge">[${p.badge}]</span>` : ""}</h3><span class="period">${p.period}</span></header>
     <p class="summary">${p.summary}</p><ul>${li(p.bullets)}</ul>${tags(p.tags)}</article></section>`),
 
-  `<section>${h2("교육 · 학력")}${r.education.map(e => `<div class="prior"><div><b>${e.title.replace(" | ", " · ")}</b></div><div><span class="period">${e.period}</span></div></div>`).join("")}${r.degrees.map(d => `<div class="prior"><div><b>${d.title}</b></div><div>${d.desc}</div></div>`).join("")}</section>`,
+  `<section>${h2("학력")}${r.education.map(e => `<div class="prior"><div><b>${e.title.replace(" | ", " · ")}</b></div><div><span class="period">${e.period}</span></div></div>`).join("")}${r.degrees.map(d => `<div class="prior"><div><b>${d.title}</b></div><div>${d.desc}</div></div>`).join("")}</section>`,
 
 ];
 
