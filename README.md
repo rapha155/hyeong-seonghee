@@ -3,7 +3,7 @@
 - `resume.html` 이력서 화면 — 내용은 `resume-data.js`에서 수정
 - `portfolio.html` 포트폴리오 (현재 버전). 내용은 `portfolio-v2-data.js`, 스타일은 `slides-v2.css`
 - `portfolio-old.html` 이전 포트폴리오 화면 — 내용은 `portfolio-data.js`, 이미지는 `img/`
-- `portfolio-gigs.html` · `resume-gigs.html` 원티드긱스 지원용 맞춤판(부동산 운영관리 어드민, 1인 전담). 기본 데이터를 불러온 뒤 `portfolio-gigs-data.js` · `resume-gigs-data.js`에서 맞춤 내용만 덧씌움. 스타일 추가는 `slides-gigs.css`. 지원 메시지는 `지원메시지_원티드긱스.md`
+- `portfolio-gigs.html` · `resume-gigs.html` 원티드긱스 지원용 맞춤판(어드민 대시보드 · B2C React 공고 공용, 1인 전담). 기본 데이터를 불러온 뒤 `portfolio-gigs-data.js` · `resume-gigs-data.js`에서 맞춤 내용만 덧씌움. 스타일 추가는 `slides-gigs.css`. 지원 메시지는 `지원메시지_원티드긱스.md`
 - `style.css` 공통 스타일(이력서) — 색/폰트는 `:root` 변수
 - `slides.css` 포트폴리오 슬라이드(1280×720) 스타일. 인쇄하면 16:9 한 장씩 PDF
 
