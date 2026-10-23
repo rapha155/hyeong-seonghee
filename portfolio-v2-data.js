@@ -7,7 +7,7 @@ const PF = {
     role: "Software Engineer · React · Next.js · AI",
     tagline: "사내 시스템부터 15개국에 출시한 앱까지, 화면 · 데이터 · AI를 직접 만드는 개발자",
     now: "현재 Korea Digital 재직",
-    contacts: ["comely1515@gmail.com", "010-3050-0299", "github.com/rapha155", "comelylabs.com"],
+    contacts: ["comely1515@gmail.com", "010-3050-0299", "github.com/Comely15", "comelylabs.com"],
     year: "Portfolio 2026",
   },
 
@@ -39,7 +39,7 @@ const PF = {
     groups: [
       { name: "Korea Digital", sub: ["AI 엔지니어 · 개발자", "2026.07 ~ 현재"], rows: [
         ["2026.10", "PHRI 수직농장", "연구원이 쓰는 스마트팜 운영 화면 UX · 팀(프론트 담당)"],
-        ["2026.09 ~ 2026.10", "ERP 연동 주문·정산 관리자", "사내 주문·견적·정산 시스템 재구축 · 단독"],
+        ["2026.09 ~ 2026.10", "ERP 연동 주문·정산 관리자", "사내 주문·견적·정산 시스템 신규 구축 · 단독"],
         ["2026.07 ~ 2026.09", "Science# 로컬 AI", "로컬 LLM이 과학 실험 차트를 다루는 학습 도우미 · 팀(센서 통신 외 전체)"],
       ]},
       { name: "프로젝트", rows: [
@@ -50,7 +50,7 @@ const PF = {
         ["2025.01 ~ 현재", "SAYON → LingoStep IELTS", "기획·개발 → 2025.03 출시, 2026.10 IELTS 학습 앱으로 리뉴얼"],
         ["2025.01 ~ 현재", "말씀나무", "기획·개발 → 2025.03 출시 → 운영 중"],
         ["2024.06 ~ 현재", "Noahlog", "Flutter 독학·기획 → 2024.09 15개국 출시 → 운영 중"],
-        ["2024.02 ~ 2024.06", "운동기록 사이트(팀)", "React · Spring 독학 후 팀 프로젝트"],
+        ["2024.02 ~ 2024.06", "운동기록 사이트(팀)", "Spring 독학 후 팀 프로젝트"],
         ["2023.09 ~ 2024.02", "서비스 기획(팀)", "유튜브 프리미엄 UX 개선, 이력서 관리 서비스 기획(Figma)"],
       ]},
     ],
@@ -59,7 +59,7 @@ const PF = {
   index: {
     title: "Projects",
     items: [
-      { name: "ERP 연동 주문·정산 관리자", line: "주문·견적·정산 사내 시스템을 React + AWS로 재구축", tag: "회사 · 단독", period: "2026.09 ~ 10", thumb: "7-kd-order/admin-commission.png" },
+      { name: "ERP 연동 주문·정산 관리자", line: "주문·견적·정산 사내 시스템을 React + AWS로 새로 구축", tag: "회사 · 단독", period: "2026.09 ~ 10", thumb: "7-kd-order/admin-commission.png" },
       { name: "PHRI 수직농장", line: "연구원이 쓰는 스마트팜 운영 화면 UX", tag: "회사 · 팀(프론트 담당)", period: "2026.10", thumb: "8-kd-vertical-farm/dashboard-overview.png" },
       { name: "Science# 로컬 AI", line: "로컬 LLM이 과학 실험 차트를 다루는 학습 도우미", tag: "회사 · 팀(센서 통신 외 전체)", period: "2026.07 ~ 09", thumb: "6-kd-local-ai/dark-theme.png" },
       { name: "IT News CMS", line: "Next.js App Router로 만든 기사 운영 CMS", tag: "개인", period: "2026.04 ~ 10", thumb: "9-it-news-cms/articles.png" },
@@ -72,7 +72,7 @@ const PF = {
     {
       name: "ERP 연동 주문·정산 관리자",
       org: "Korea Digital",
-      plain: "Google Sheets와 Apps Script로 운영하던 사내 주문·견적·정산 업무를 React + AWS 웹 시스템으로 재구축했습니다.",
+      plain: "Google Sheets와 Apps Script로 처리하던 사내 주문·견적·정산 업무를 위해 React + AWS 웹 시스템을 새로 만들었습니다.",
       background: "주문 원천인 ERP(이카운트)에서 담당자가 매번 엑셀을 내려받아 옮겼고, 같은 업무 규칙이 화면마다 다른 답을 냈습니다.",
       problem: "조회 API가 없는 ERP에서 데이터를 자동으로 가져오고, 흩어진 업무 규칙을 한곳으로 모으는 것",
       role: "프론트엔드 · 백엔드 · 배포 단독",
@@ -237,7 +237,7 @@ const PF = {
     title: "감사합니다.",
     lead: "사용자의 업무를 이해하고,<br>화면부터 AI까지 끝까지 책임지는 개발자로 함께하겠습니다.",
     // 연락처는 [항목 이름, 값] — 본문 크기로 크게, 오른쪽 아래에 이름 · 직함
-    contacts: [["Email", "comely1515@gmail.com"], ["Phone", "010-3050-0299"], ["GitHub", "github.com/rapha155"], ["Web", "comelylabs.com"]],
+    contacts: [["Email", "comely1515@gmail.com"], ["Phone", "010-3050-0299"], ["GitHub", "github.com/Comely15"], ["Web", "comelylabs.com"]],
     sign: "형성희 · Software Engineer",
   },
 };

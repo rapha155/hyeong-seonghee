@@ -18,7 +18,7 @@ const PORTFOLIO = {
       "현재 Korea Digital에서 로컬 LLM 학습 도우미, 사내 업무 시스템, 스마트팜 웹앱을 개발하며 AI와 웹 기술로 <b>실질적인 해결 방향</b>을 만드는 일을 하고 있습니다.",
     ],
     links: [
-      { label: "GITHUB", value: "github.com/rapha155", href: "https://github.com/rapha155" },
+      { label: "GITHUB", value: "github.com/Comely15", href: "https://github.com/Comely15" },
       { label: "WEB", value: "comelylabs.com", href: "https://comelylabs.com" },
       { label: "Email", value: "comely1515@gmail.com", href: "mailto:comely1515@gmail.com" },
       { label: "Phone", value: "010-3050-0299" },
@@ -44,7 +44,7 @@ const PORTFOLIO = {
   overview: {
     work: [
       { name: "PHRI 수직농장 웹앱", desc: "스마트팜 운영 화면 UX · 백엔드 계약 연결", period: "2026. 10" },
-      { name: "KD order", desc: "주문·견적·정산 사내 웹앱 재구축", period: "2026. 09 ~ 10" },
+      { name: "KD order", desc: "주문·견적·정산 사내 웹앱 신규 구축", period: "2026. 09 ~ 10" },
       { name: "Science# 로컬 AI", desc: "로컬 LLM 과학 실험 학습 도우미 (AI·MCP)", period: "2026. 07 ~ 09" },
     ],
     upcoming: [
@@ -108,7 +108,7 @@ const PORTFOLIO = {
       desktop: true,
       images: ["7-kd-order/orders-list.png", "7-kd-order/admin-order-upload.png"],
       overview: [
-        { label: "서비스 정의", value: "Apps Script + 스프레드시트로 운영하던 사내 <b>주문·견적·정산·입금</b> 도구를 React + AWS Lambda + PostgreSQL로 재구축" },
+        { label: "서비스 정의", value: "Apps Script + 스프레드시트로 처리하던 사내 <b>주문·견적·정산·입금</b> 업무를 위한 웹 시스템을 React + AWS Lambda + PostgreSQL로 새로 구축" },
         { label: "핵심 역할", value: "<b>단독 개발</b>. 현업 요청은 번호로 받아 원인·계획을 정리하고, 판단이 필요한 건은 결정 요청서로 확인 후 반영" },
         { label: "주요 기능", value: "주문 목록(상태 칩·긴급 고정 정렬·중복 검사), 견적서·비교견적 PDF, 입금관리, 관리자(ERP 불러오기·배송처 확인·대리점 정산)" },
       ],

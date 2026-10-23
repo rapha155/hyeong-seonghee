@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>새 탭</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+<link rel="stylesheet" href="slides-v2.css">
+<link rel="stylesheet" href="slides-gigs.css">
+</head>
+<body>
+<nav class="nav"><a href="resume-gigs.html">이력서 (긱스)</a><a href="portfolio-gigs.html" class="on">포트폴리오 (긱스)</a><a href="portfolio.html">기본 포트폴리오</a>
+  <button class="dl" onclick="window.print()">PDF로 저장</button></nav>
+<main class="slides" id="app"></main>
+
+<script src="portfolio-v2-data.js"></script>
+<script src="portfolio-gigs-data.js"></script>
+<script>
+// 프리랜서용. 프로젝트 본문은 PF(portfolio-v2-data.js), 프리랜서용 내용은 GIG(portfolio-gigs-data.js)
+const slide = (cls, html, foot = "") => `<section class="slide ${cls}"><div class="in">${html}${foot ? `<div class="foot">${foot}</div>` : ""}<div class="no"></div></div></section>`;
+const img = (i, cls = "") => `<img class="${cls}" src="screenshots/${i}" alt="">`;
+const meta = m => `<dl class="meta">${m.map(([k, v]) => `<dt>${k}</dt><dd>${v.split(" · ").map(x => `<span class="nb">${x}</span>`).join(" · ")}</dd>`).join("")}</dl>`;
+const results = r => `<div class="results">${r.map(k => `<div><div class="lead">${k.lead}</div><div class="sub">${k.sub}</div></div>`).join("")}</div>`;
+const link = t => `<a href="${t.includes("@") ? "mailto:" + t : /^[0-9-]+$/.test(t) ? "tel:" + t.replace(/-/g, "") : "https://" + t}" target="_blank">${t}</a>`;
+const c = { ...PF.cover, ...GIG.cover }, f = GIG.fit;
+const byName = n => PF.projects.find(p => p.name === n);
+
+const coverSlide = slide("cover", `
+  <div class="year">${c.year}</div>
+  <h1>${c.name}<span>${c.latin}</span></h1>
+  <div class="crole">${c.role}</div>
+  <p class="pos">${c.tagline}</p>
+  <div class="cover-foot"><span>${c.now}</span><span>${c.contacts.map(link).join("  ·  ")}</span></div>`);
+
+const fitSlide = slide("fit", `
+  <h2>${f.title}<small>${f.sub}</small></h2>
+  <p class="g-head">${f.headline}</p>
+  <table class="fit-table"><thead><tr><th>필요한 역량</th><th>제가 해 본 것</th><th>근거 프로젝트</th></tr></thead>
+    <tbody>${f.rows.map(r => `<tr>${r.map(x => `<td>${x}</td>`).join("")}</tr>`).join("")}</tbody></table>
+  <dl class="terms">${f.terms.map(([k, v]) => `<div><dt>${k}</dt><dd>${v}</dd></div>`).join("")}</dl>`);
+
+// 프로젝트 이력: 기간 · 고객 · 형태 · 담당 · 기술 (경력기술서 형식)
+const h = GIG.history;
+const historySlide = h.pages.map(pg => slide("history", `
+  <h2>${h.title}<small>${pg.label} · ${pg.sub}</small></h2>
+  <table class="hist"><thead><tr><th>기간</th><th>프로젝트</th><th>구분 · 형태</th><th>담당</th><th>기술</th></tr></thead>
+    <tbody>${pg.rows.map(r => `<tr><td>${r.period}<small>${r.dur}</small></td><td><b>${r.name}</b></td><td>${r.client}<small>${r.type}</small></td><td>${r.scope}</td><td class="tech">${r.tech}</td></tr>`).join("")}</tbody></table>`)).join("");
+
+// 프로젝트 장 머리: 번호 + 참여 정보 띠(고객 · 형태 · 기간 · 규모). 왼쪽 정보란은 담당 / 범위 밖 / 기술
+let pno = 0;
+const eg = name => GIG.engage[name];
+const phead = (name, n = ++pno) => { const e = eg(name); return `<div class="engage"><span class="pno">프로젝트 ${n}</span>
+  <div><b>${e.client.startsWith("개인") ? "구분" : "고객"}</b>${e.client}</div><div><b>형태</b>${e.type}</div><div><b>기간</b>${e.period}<em>${e.dur}</em></div><div><b>규모</b>${e.size}</div></div>`; };
+// 기술은 engage.tech가 있으면 그것으로 (문서의 기술 표 기준)
+const pmeta = (name, m) => { const e = eg(name); return meta([["담당", e.scope], ...(e.out ? [["범위 밖", e.out]] : []),
+  ...m.filter(([k]) => k !== "기간" && !(e.tech && (k === "기술" || k === "스택"))), ...(e.tech ? [["기술", e.tech]] : [])]); };
+const brief = p => `<dl class="brief"><dt>기획 배경</dt><dd>${p.background}</dd><dt>핵심 문제</dt><dd>${p.problem}</dd></dl>`;
+const povSlide = (p, cls = "pov") => slide(cls, `${phead(p.name)}
+    <div class="pov-grid">
+      <div class="pov-left">
+        <h2>${p.name}</h2>
+        <p class="plain">${p.plain}</p>
+        ${brief(p)}
+        ${pmeta(p.name, p.meta)}
+        ${p.other ? `<p class="other">${p.other}</p>` : ""}
+        ${p.structure ? `<div class="struct"><div class="struct-cap">프론트엔드 구조</div><dl>${p.structure.map(([k, v]) => `<dt>${k}</dt><dd>${v}</dd>`).join("")}</dl></div>` : ""}
+      </div>
+      <figure class="hero">${img(p.hero)}<figcaption>${p.caption}</figcaption></figure>
+    </div>
+    ${results(p.results)}`);
+// 첫 장 + 핵심 과제 장. 핵심 과제 장 아래에 "이 프로젝트에 가져올 것" 띠
+const projectSlides = p => {
+  const n = pno + 1, carry = GIG.carry[p.name];
+  return povSlide(p) + slide("ptask", `${phead(p.name, n)}
+    <h2>${p.name}<small>핵심 과제 ${p.tasks.length}</small></h2>
+    <div class="tasks">${p.tasks.map(t => `<div class="task"><h3>${t.title}</h3>
+      <div class="row"><div class="rl">문제</div><p>${t.problem}</p></div>
+      <div class="row"><div class="rl">해결</div><p>${t.solution}</p></div>
+      <div class="row res"><div class="rl">결과</div><p>${t.result}</p></div></div>`).join("")}</div>
+    ${carry ? `<div class="carry"><div class="cap">다음 프로젝트에<br>가져갈 것</div>${carry.map(x => `<p>${x}</p>`).join("")}</div>` : ""}`);
+};
+
+// RAG 흐름도는 portfolio.html과 같은 구조
+const node = ([t, d], cls = "") => `<div class="rf-node ${cls}"><b>${t}</b><span>${d}</span></div>`;
+const arrow = (label = "") => `<div class="rf-arrow"><i></i>${label ? `<em>${label}</em>` : ""}</div>`;
+const ragFlow = f => `<div class="rag-flow">
+  <div class="rf-ask">${f.ask}</div>${arrow()}
+  <div class="rf-cache">${node(f.cache)}<div class="rf-hit"><span><b>있으면 바로 응답</b><br>${f.cache[2]}</span></div></div>${arrow("캐시에 없으면")}
+  <div class="rf-search"><div class="rf-cap">하이브리드 검색</div><div class="rf-pair">${f.search.map(x => node(x)).join("")}</div></div>${arrow(f.merge)}
+  ${node(f.context)}${arrow()}${node(f.llm, "llm")}${arrow()}
+  <div class="rf-answer">${f.answer}</div>
+  <div class="rf-prep"><div class="rf-cap">사전 준비</div><div class="rf-steps">${f.prep.map(x => `<span>${x}</span>`).join("<i>→</i>")}</div></div>
+</div>`;
+const ragSlide = () => { const r = PF.rag; return slide("rag", `${phead(r.name)}
+  <div class="rag-grid">
+    <div><h2>${r.name}</h2><p class="plain">${r.plain}</p>${brief(r)}${pmeta(r.name, r.meta)}</div>
+    <div class="rag-media">${img(r.phone, "rag-phone")}${ragFlow(r.flow)}</div>
+  </div>
+  ${results(r.results)}`); };
+
+// 출시 앱 4종: portfolio.html의 appsSlide와 같은 구성, 머리만 참여 정보 띠
+const appsSlide = () => { const a = PF.apps, g = GIG.apps, e = g.engage, n = ++pno; return slide("apps", `<div class="engage"><span class="pno">프로젝트 ${n}</span>
+  <div><b>구분</b>${e.client}</div><div><b>형태</b>${e.type}</div><div><b>기간</b>${e.period}<em>${e.dur}</em></div><div><b>규모</b>${e.size}</div></div>
+  <h2>${a.title}</h2>
+  <p class="plain">${a.sub}</p>
+  <div class="app-grid">${a.items.map(x => `<div class="app">${img(x.img, x.bare ? "bare" : "")}<h3>${x.name}<small>${g.period[x.name] || x.period}</small></h3><p>${x.line}</p><div class="tech">${x.tech}</div>${x.link ? `<a class="store" href="https://${x.link.split(" ")[0]}" target="_blank">App Store</a>${x.link.includes("Google") ? `<span class="store-sep">·</span><a class="store" href="https://play.google.com/store/apps/details?id=com.seonghee.korean_history_app" target="_blank">Google Play</a>` : ""}` : ""}</div>`).join("")}</div>`); };
+
+// 일하는 방식: 한 줄 소개 + 원칙 넷, 각 원칙 아래 실제 사례
+const workSlide = () => { const w = GIG.work; return slide("work", `
+  <h2>${w.title}</h2>
+  <p class="w-lead">${w.lead}</p>
+  <div class="work-grid">${w.items.map(x => `<div><h4>${x.h}</h4><p>${x.p}</p><div class="w-ref">${x.ref}</div></div>`).join("")}</div>`); };
+
+const outroSlide = slide("cover outro", `
+  <h1>${PF.outro.title}</h1><p class="pos">${GIG.outro.lead}</p>
+  <dl class="outro-contacts">${PF.outro.contacts.map(([k, v]) => `<dt>${k}</dt><dd>${link(v)}</dd>`).join("")}</dl>
+  <div class="cover-foot"><span></span><span>${GIG.outro.sign}</span></div>`);
+
+// 순서: 표지 → Why Me → 프로젝트 이력 → 정산 어드민 → 대시보드 → 차트 → 법령 RAG → 출시 앱 4종 → 일하는 방식 → 마무리
+document.getElementById("app").innerHTML = coverSlide + fitSlide + historySlide
+  + projectSlides(byName("주문·정산 관리자")) + projectSlides(byName("PHRI 수직농장"))
+  + projectSlides(byName("Science# 로컬 AI"))
+  + ragSlide() + appsSlide() + workSlide() + outroSlide;
+
+const fit = el => el.style.setProperty("--s", el.clientWidth / 1280);
+const ro = new ResizeObserver(es => es.forEach(e => fit(e.target)));
+document.querySelectorAll(".slide").forEach(el => { ro.observe(el); el.addEventListener("click", () => el.classList.toggle("zoom")); });
+</script>
+</body>
+</html>

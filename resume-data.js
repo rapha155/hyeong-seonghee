@@ -6,7 +6,7 @@ const RESUME = {
   contacts: [
     { label: "010-3050-0299", href: "tel:01030500299" },
     { label: "comely1515@gmail.com", href: "mailto:comely1515@gmail.com" },
-    { label: "github.com/rapha155", href: "https://github.com/rapha155" },
+    { label: "github.com/Comely15", href: "https://github.com/Comely15" },
     { label: "comelylabs.com", href: "https://comelylabs.com" },
   ],
 
@@ -37,7 +37,7 @@ const RESUME = {
     { period: "2025.01 — 현재", type: "project", title: "SAYON → 2026.10 LingoStep IELTS로 리뉴얼", desc: "2025.03 출시, GPT-4o 롤플레이 → IELTS 매일 학습 앱" },
     { period: "2025.01 — 현재", type: "project", title: "말씀나무 기획·출시·운영", desc: "2025.03 출시, 홈 화면 위젯, 암송 세션 · 복습 일정" },
     { period: "2024.06 — 현재", type: "project", title: "Noahlog 기획·출시·운영", desc: "Flutter 독학 후 2024.09 15개국 출시, Offline-First 동기화" },
-    { period: "2024.02 — 2024.06", type: "project", title: "운동기록 사이트 팀 프로젝트", desc: "React · Spring 독학 후 팀 개발" },
+    { period: "2024.02 — 2024.06", type: "project", title: "운동기록 사이트 팀 프로젝트", desc: "Spring 독학 후 팀 개발" },
     { period: "2023.09 — 2024.02", type: "project", title: "서비스 기획 팀 프로젝트", desc: "유튜브 프리미엄 UX 개선, 이력서 관리 서비스 기획 (Figma)" },
   ],
 
@@ -48,7 +48,7 @@ const RESUME = {
   projectsIntro: "상세한 기획 배경과 문제 해결 과정은 포트폴리오에 정리했습니다.",
   projects: [
     { title: "KD order — 주문·견적·정산 사내 웹 시스템", badge: "Korea Digital · 전담", period: "2026.09 — 2026.10",
-      summary: "스프레드시트로 운영하던 사내 주문·정산 업무를 React + AWS 웹 시스템으로 재구축",
+      summary: "스프레드시트로 처리하던 사내 주문·정산 업무를 위한 React + AWS 웹 시스템을 새로 구축",
       bullets: ["조회 API 없는 ERP 데이터 자동 수집으로 엑셀 수작업 제거", "정산 조회 22.9초 → 0.12초, 업무 규칙을 DB 한 곳으로 단일화"],
       tags: ["React 19", "Node.js Lambda", "PostgreSQL"] },
     { title: "Science# 로컬 AI — 과학 실험 AI 학습 도우미", badge: "Korea Digital · 전담", period: "2026.07 — 2026.09",
